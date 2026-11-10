@@ -1,0 +1,147 @@
+* {
+    box-sizing:border-box
+}
+
+body {
+    margin:0;
+    background:#0e1525;
+    color:#ebf1ff;
+    font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+    line-height:1.5
+}
+
+header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    padding:1rem 4%;
+    border-bottom:1px solid #2e3a55
+}
+
+a {
+    color:#91c3ff
+}
+
+nav {
+    display:flex;
+    gap:1.2rem;
+    flex-wrap:wrap;
+    align-items:center
+}
+
+nav form {
+    margin:0
+}
+
+.logo {
+    font-weight:800;
+    font-size:1.6rem;
+    text-decoration:none;
+    color:#fff
+}
+
+main {
+    width:min(1100px,94%);
+    margin:2rem auto
+}
+
+h1 {
+    font-size:2.3rem
+}
+
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:1rem
+}
+
+.card {
+    background:#17243b;
+    border:1px solid #35476a;
+    border-radius:16px;
+    padding:1.3rem;
+    margin-bottom:1rem
+}
+
+.card h2 {
+    font-size:1.35rem
+}
+
+.tag {
+    background:#263f69;
+    border-radius:20px;
+    padding:.3rem .7rem;
+    font-size:.8rem
+}
+
+label {
+    display:block;
+    margin:.8rem 0
+}
+
+input,select {
+    display:block;
+    width:100%;
+    background:#0c1525;
+    color:white;
+    border:1px solid #52637e;
+    padding:.7rem;
+    border-radius:8px;
+    margin:.25rem 0
+}
+
+input[type=checkbox] {
+    width:auto;
+    display:inline
+}
+
+button {
+    background:#69aaff;
+    color:#051427;
+    border:0;
+    padding:.7rem 1rem;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+    margin:.4rem 0
+}
+
+.secondary {
+    background:#dce4f2
+}
+
+.alert {
+    color:#fff;
+    background:#a3293c;
+    padding:1rem;
+    border-radius:8px
+}
+
+.login {
+    max-width:450px;
+    margin:10vh auto;
+    padding:2rem;
+    background:#17243b;
+    border-radius:16px
+}
+
+.muted {
+    color:#a8b3c8
+}
+
+@media(max-width:700px) {
+    header {
+    display:block
+}
+
+nav {
+    margin-top:1rem
+}
+
+h1 {
+    font-size:1.8rem
+}
+
+
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Mes réservations • ResMat
+  </title>
+  <link href="/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header>
+   <a class="logo" href="/catalogue">
+    ResMat
+   </a>
+   <nav>
+    <a href="/catalogue">
+     Catalogue
+    </a>
+    <a href="/mes-reservations">
+     Mes réservations
+    </a>
+    <a href="/gestion">
+     Gestion
+    </a>
+    <a href="/gestion/types">
+     Types
+    </a>
+    <form action="/logout" method="post">
+     <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+     <button>
+      Déconnexion
+     </button>
+    </form>
+   </nav>
+  </header>
+  <main>
+   <h1>
+    Mes réservations
+   </h1>
+   {{#erreur}}
+   <p class="alert">
+    {{erreur}}
+   </p>
+   {{/erreur}}
+   <h2>
+    Demandes
+   </h2>
+   <section class="grid">
+    {{#reservations}}
+    <article class="card">
+     <h3>
+      {{typeMateriel.nom}}
+     </h3>
+     <p>
+      Statut :
+      <strong>
+       {{statut}}
+      </strong>
+     </p>
+     <p>
+      {{dateDebut}} → {{dateFin}}
+     </p>
+     {{#motivationAvis}}
+     <p>
+      {{motivationAvis}}
+     </p>
+     {{/motivationAvis}}{{^avis}}{{^annulee}}
+     <form action="/reservation/{{id}}/annuler" method="post">
+      <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+      <button>
+       Annuler si en attente
+      </button>
+     </form>
+     {{/annulee}}{{/avis}}
+    </article>
+    {{/reservations}}
+   </section>
+   <h2>
+    Emprunts
+   </h2>
+   <section class="grid">
+    {{#emprunts}}
+    <article class="card">
+     <h3>
+      {{materiel.nom}}
+     </h3>
+     <p>
+      Retour prévu : {{dateRetourPrevue}}
+     </p>
+     {{#enRetard}}
+     <p class="alert">
+      En retard
+     </p>
+     {{/enRetard}}
+     <p>
+      Retour effectué : {{dateRetourEffective}}
+     </p>
+    </article>
+    {{/emprunts}}
+   </section>
+  </main>
+ </body>
+</html>

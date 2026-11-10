@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Gestion des demandes • ResMat
+  </title>
+  <link href="/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header>
+   <a class="logo" href="/catalogue">
+    ResMat
+   </a>
+   <nav>
+    <a href="/catalogue">
+     Catalogue
+    </a>
+    <a href="/mes-reservations">
+     Mes réservations
+    </a>
+    <a href="/gestion">
+     Gestion
+    </a>
+    <a href="/gestion/types">
+     Types
+    </a>
+    <form action="/logout" method="post">
+     <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+     <button>
+      Déconnexion
+     </button>
+    </form>
+   </nav>
+  </header>
+  <main>
+   <h1>
+    Gestion des demandes
+   </h1>
+   {{#erreur}}
+   <p class="alert">
+    {{erreur}}
+   </p>
+   {{/erreur}}
+   <h2>
+    À traiter
+   </h2>
+   <section class="grid">
+    {{#attentes}}
+    <article class="card">
+     <h3>
+      {{typeMateriel.nom}}
+     </h3>
+     <p>
+      {{emprunteur.prenom}} {{emprunteur.nom}}
+     </p>
+     <p>
+      {{dateDebut}} → {{dateFin}}
+     </p>
+     <p>
+      {{commentaire}}
+     </p>
+     <form action="/gestion/reservation/{{id}}/decision" method="post">
+      <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+      <input name="accepter" type="hidden" value="true"/>
+      <button>
+       Accepter
+      </button>
+     </form>
+     <form action="/gestion/reservation/{{id}}/decision" method="post">
+      <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+      <input name="accepter" type="hidden" value="false"/>
+      <input name="motif" placeholder="Motif du refus"/>
+      <button class="secondary">
+       Refuser
+      </button>
+     </form>
+    </article>
+    {{/attentes}}
+   </section>
+   <h2>
+    Réservations acceptées — remise
+   </h2>
+   <section class="grid">
+    {{#acceptees}}
+    <article class="card">
+     <h3>
+      {{typeMateriel.nom}}
+     </h3>
+     <p>
+      {{emprunteur.prenom}} {{emprunteur.nom}} — {{dateDebut}}
+     </p>
+     <form action="/gestion/reservation/{{id}}/remettre" method="post">
+      <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+      <button>
+       Enregistrer la remise
+      </button>
+     </form>
+    </article>
+    {{/acceptees}}
+   </section>
+   <h2>
+    Emprunts en cours
+   </h2>
+   <section class="grid">
+    {{#emprunts}}
+    <article class="card">
+     <h3>
+      {{materiel.nom}}
+     </h3>
+     <p>
+      Retour prévu : {{dateRetourPrevue}}
+     </p>
+     {{#enRetard}}
+     <p class="alert">
+      En retard
+     </p>
+     {{/enRetard}}
+     <form action="/gestion/emprunt/{{id}}/rendre" method="post">
+      <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+      <label>
+       Remarque
+       <input name="remarque"/>
+      </label>
+      <label>
+       <input name="degradations" type="checkbox" value="true"/>
+       Dégradation constatée
+      </label>
+      <button>
+       Enregistrer le retour
+      </button>
+     </form>
+    </article>
+    {{/emprunts}}
+   </section>
+  </main>
+ </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Connexion • ResMat
+  </title>
+  <link href="/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <main class="login">
+   <h1>
+    ResMat
+   </h1>
+   <p>
+    Connectez-vous pour emprunter du matériel.
+   </p>
+   {{#error}}
+   <p class="alert">
+    Identifiants incorrects.
+   </p>
+   {{/error}}
+   <form action="/login" method="post">
+    <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+    <label>
+     Identifiant
+     <input name="username" required=""/>
+    </label>
+    <label>
+     Mot de passe
+     <input name="password" required="" type="password"/>
+    </label>
+    <button>
+     Connexion
+    </button>
+   </form>
+   <p class="muted">
+    Démo : etudiant / Demo123! ou gestionnaire / Demo123!
+   </p>
+  </main>
+ </body>
+</html>

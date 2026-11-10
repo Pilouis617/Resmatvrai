@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Gestion des types de matériel • ResMat
+  </title>
+  <link href="/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header>
+   <a class="logo" href="/catalogue">
+    ResMat
+   </a>
+   <nav>
+    <a href="/catalogue">
+     Catalogue
+    </a>
+    <a href="/mes-reservations">
+     Mes réservations
+    </a>
+    <a href="/gestion">
+     Gestion
+    </a>
+    <a href="/gestion/types">
+     Types
+    </a>
+    <form action="/logout" method="post">
+     <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+     <button>
+      Déconnexion
+     </button>
+    </form>
+   </nav>
+  </header>
+  <main>
+   <h1>
+    Gestion des types de matériel
+   </h1>
+   {{#erreur}}
+   <p class="alert">
+    {{erreur}}
+   </p>
+   {{/erreur}}
+   <section class="card">
+    <h2>
+     Ajouter un type
+    </h2>
+    <form action="/gestion/types" method="post">
+     <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+     <label>
+      Nom
+      <input name="nom" required=""/>
+     </label>
+     <label>
+      Description
+      <input name="description" required=""/>
+     </label>
+     <label>
+      Durée maximale (jours)
+      <input max="365" min="1" name="dureeMaxEmprunt" required="" type="number" value="14"/>
+     </label>
+     <label>
+      Catégorie
+      <select name="categorieId">
+       {{#categories}}
+       <option value="{{id}}">
+        {{nom}}
+       </option>
+       {{/categories}}
+      </select>
+     </label>
+     <label>
+      <input checked="" name="auCatalogue" type="checkbox" value="true"/>
+      Au catalogue
+     </label>
+     <button>
+      Créer
+     </button>
+    </form>
+   </section>
+   <h2>
+    Types existants
+   </h2>
+   <section class="grid">
+    {{#types}}
+    <article class="card">
+     <h3>
+      {{nom}}
+     </h3>
+     <form action="/gestion/types" method="post">
+      <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+      <input name="id" type="hidden" value="{{id}}"/>
+      <label>
+       Nom
+       <input name="nom" required="" value="{{nom}}"/>
+      </label>
+      <label>
+       Description
+       <input name="description" required="" value="{{description}}"/>
+      </label>
+      <label>
+       Durée (jours)
+       <input name="dureeMaxEmprunt" required="" type="number" value="{{dureeMaxEmprunt}}"/>
+      </label>
+      <label>
+       Catégorie
+       <select name="categorieId">
+        {{#categories}}
+        <option value="{{id}}">
+         {{nom}}
+        </option>
+        {{/categories}}
+       </select>
+      </label>
+      <label>
+       <input checked="" name="auCatalogue" type="checkbox" value="true"/>
+       Au catalogue
+      </label>
+      <button>
+       Enregistrer
+      </button>
+     </form>
+     <form action="/gestion/types/{{id}}/desactiver" method="post">
+      <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+      <button class="secondary">
+       Retirer du catalogue
+      </button>
+     </form>
+    </article>
+    {{/types}}
+   </section>
+  </main>
+ </body>
+</html>

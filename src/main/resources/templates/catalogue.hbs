@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Catalogue du matériel • ResMat
+  </title>
+  <link href="/css/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header>
+   <a class="logo" href="/catalogue">
+    ResMat
+   </a>
+   <nav>
+    <a href="/catalogue">
+     Catalogue
+    </a>
+    <a href="/mes-reservations">
+     Mes réservations
+    </a>
+    <a href="/gestion">
+     Gestion
+    </a>
+    <a href="/gestion/types">
+     Types
+    </a>
+    <form action="/logout" method="post">
+     <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+     <button>
+      Déconnexion
+     </button>
+    </form>
+   </nav>
+  </header>
+  <main>
+   <h1>
+    Catalogue du matériel
+   </h1>
+   {{#erreur}}
+   <p class="alert">
+    {{erreur}}
+   </p>
+   {{/erreur}}
+   <p>
+    Choisissez un équipement puis indiquez vos dates.
+   </p>
+   <section class="grid">
+    {{#types}}
+    <article class="card">
+     <span class="tag">
+      {{categorie.nom}}
+     </span>
+     <h2>
+      {{nom}}
+     </h2>
+     <p>
+      {{description}}
+     </p>
+     <p>
+      Durée maximale : {{dureeMaxEmprunt}} jours
+     </p>
+     <form action="/reserver" method="post">
+      <input name="{{csrfParameterName}}" type="hidden" value="{{csrfToken}}"/>
+      <input name="typeMaterielId" type="hidden" value="{{id}}"/>
+      <label>
+       Début
+       <input name="dateDebut" required="" type="datetime-local"/>
+      </label>
+      <label>
+       Fin
+       <input name="dateFin" required="" type="datetime-local"/>
+      </label>
+      <label>
+       Commentaire
+       <input name="commentaire"/>
+      </label>
+      <button>
+       Demander une réservation
+      </button>
+     </form>
+    </article>
+    {{/types}}
+   </section>
+  </main>
+ </body>
+</html>

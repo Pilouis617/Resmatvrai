@@ -1,0 +1,14 @@
+services:
+  mariadb:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_dev_password}
+      MARIADB_DATABASE: resmat
+      MARIADB_USER: ${DB_USER:-spring_user}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-spring_dev_password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - resmat_data:/var/lib/mysql
+volumes:
+  resmat_data:
