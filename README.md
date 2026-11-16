@@ -1,24 +1,36 @@
-ResMat — Réservation de matériel
+# ResMat — Réservation de matériel
 
-Application web de réservation et de prêt de matériel (informatique, audiovisuel…) pour un établissement scolaire. Les étudiants consultent le catalogue et demandent une réservation ; les gestionnaires valident les demandes, remettent le matériel et enregistrent son retour.
+Application web de réservation et de prêt de matériel (informatique, audiovisuel, etc.) pour un établissement scolaire.
+
+## Description
+
+Cette application permet aux étudiants de consulter le catalogue de matériel, effectuer des demandes de réservation et suivre l’état de leurs emprunts. Les gestionnaires peuvent ensuite valider ou refuser les demandes, attribuer le matériel disponible et gérer les retours.
+
+## Fonctionnalités
+
+### Côté étudiant
+- Consultation du catalogue par catégorie
+- Demande de réservation sur une période donnée
+- Suivi du statut des demandes (en attente, acceptée, refusée, annulée)
+- Historique des emprunts
+- Annulation d’une demande avant traitement
+
+### Côté gestionnaire
+- Gestion de la file des demandes en attente
+- Validation ou refus avec motif
+- Attribution automatique d’un exemplaire disponible
+- Gestion des retours et des dégradations
+- Suivi des emprunts en retard
+- Création et modification des types de matériel
+
+## Règles métier
+- La date de début doit être dans le futur.
+- La date de fin doit être postérieure à la date de début.
+- La durée demandée ne doit pas dépasser la durée maximale d’emprunt.
+- Il est impossible de réserver un matériel retiré du catalogue ou sans exemplaire disponible.
+- Une demande est bloquée en cas de conflit avec les réservations déjà existantes.
+- Une réservation ne peut générer qu’un emprunt au maximum.
+
+## Projet
 
 Projet réalisé dans le cadre du BTS SIO.
-
-Fonctionnalités
-Côté étudiant
-Catalogue des types de matériel disponibles, classés par catégorie
-Demande de réservation sur une période (date et heure de début et de fin)
-Mes réservations : suivi du statut (En attente, Acceptée, Refusée, Annulée) et historique des emprunts
-Annulation d'une demande tant qu'elle n'a pas été traitée
-Côté gestionnaire (/gestion)
-File des demandes en attente : acceptation ou refus avec motif
-Remise du matériel : un exemplaire libre est attribué automatiquement
-Retours : date de retour réelle, signalement des dégradations, remarque
-Repérage des emprunts en retard
-Gestion des types de matériel : création, modification, durée maximale d'emprunt, retrait du catalogue
-Règles métier
-La date de début doit être dans le futur et la date de fin après la date de début
-La durée demandée ne peut pas dépasser la durée maximale d'emprunt du type (14 jours par défaut, de 1 à 365)
-Impossible de réserver un matériel retiré du catalogue ou sans exemplaire disponible
-À l'acceptation, l'application détecte les conflits : la demande est bloquée si toutes les unités sont déjà réservées sur la période
-Une réservation donne lieu à un emprunt au maximum
