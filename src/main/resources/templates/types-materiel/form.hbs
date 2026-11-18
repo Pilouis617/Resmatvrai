@@ -1,0 +1,47 @@
+{{> /include/header}}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Types de matériel</p>
+        <h1>{{#modification}}Modifier le type{{/modification}}{{^modification}}Nouveau type de matériel{{/modification}}</h1>
+    </div>
+    <a class="button button-secondary" href="/types-materiel">Retour à la liste</a>
+</div>
+
+<section class="form-card">
+    <form action="/types-materiel" method="post">
+        <input type="hidden" name="{{csrfParameterName}}" value="{{csrfToken}}">
+        {{#modification}}<input type="hidden" name="id" value="{{id}}">{{/modification}}
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input id="nom" name="nom" maxlength="70" value="{{form.nom}}" required>
+            </div>
+            <div class="form-group">
+                <label for="categorieId">Catégorie</label>
+                <select id="categorieId" name="categorieId" required>
+                    <option value="">Choisir une catégorie</option>
+                    {{#categories}}
+                        <option value="{{id}}" {{#selected}}selected{{/selected}}>{{libelle}}</option>
+                    {{/categories}}
+                </select>
+            </div>
+            <div class="form-group form-group-full">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" maxlength="6500">{{form.description}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="dureeMax">Durée maximale d'emprunt (jours)</label>
+                <input id="dureeMax" name="dureeMax" type="number" min="1" max="365" value="{{form.dureeMax}}" required>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" name="auCatalogue" value="true" {{#form.auCatalogue}}checked{{/form.auCatalogue}}>
+                    Proposer au catalogue
+                </label>
+                <input type="hidden" name="_auCatalogue" value="on">
+            </div>
+        </div>
+        <button type="submit">Enregistrer</button>
+    </form>
+</section>
+{{> /include/footer}}

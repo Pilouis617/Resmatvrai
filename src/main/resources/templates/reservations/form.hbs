@@ -1,0 +1,34 @@
+{{> /include/header}}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Nouvelle réservation</p>
+        <h1>{{type.nom}}</h1>
+        <p>{{type.categorie.libelle}} · durée maximale : {{type.dureeMaxTexte}}</p>
+    </div>
+    <a class="button button-secondary" href="/catalogue">Retour au catalogue</a>
+</div>
+
+<section class="form-card">
+    <form action="/reservations" method="post">
+        <input type="hidden" name="{{csrfParameterName}}" value="{{csrfToken}}">
+        <input type="hidden" name="typeMaterielId" value="{{type.id}}">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="dateDebut">Début</label>
+                <input id="dateDebut" name="dateDebut" type="datetime-local" value="{{dateDebut}}" required>
+            </div>
+            <div class="form-group">
+                <label for="dateFin">Fin</label>
+                <input id="dateFin" name="dateFin" type="datetime-local" value="{{dateFin}}" required>
+            </div>
+            <div class="form-group form-group-full">
+                <label for="motif">Motif de la demande</label>
+                <textarea id="motif" name="motif" maxlength="6500"
+                          placeholder="Ex. : tournage d'un projet de groupe">{{form.motif}}</textarea>
+                <p class="field-help">Facultatif, mais cela aide le gestionnaire à traiter ta demande.</p>
+            </div>
+        </div>
+        <button type="submit">Envoyer la demande</button>
+    </form>
+</section>
+{{> /include/footer}}

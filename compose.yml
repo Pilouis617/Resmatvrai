@@ -1,14 +1,17 @@
 services:
   mariadb:
-    image: mariadb:11.4
+    image: mariadb:11
+    container_name: resmat-pilouis
+    restart: unless-stopped
     environment:
-      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_dev_password}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-Password}
       MARIADB_DATABASE: resmat
-      MARIADB_USER: ${DB_USER:-spring_user}
-      MARIADB_PASSWORD: ${DB_PASSWORD:-spring_dev_password}
+      MARIADB_USER: ${DB_USER:-resmat}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-Password}
     ports:
       - "3306:3306"
     volumes:
-      - resmat_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
+
 volumes:
-  resmat_data:
+  mariadb_data:

@@ -1,0 +1,43 @@
+{{> /include/header}}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Catalogue</p>
+        <h1>Matériel disponible</h1>
+        <p>Choisis un équipement puis indique la période pendant laquelle tu en as besoin.</p>
+    </div>
+</div>
+
+{{^types}}
+    <div class="empty-state">
+        <h2>Le catalogue est vide</h2>
+        <p>Aucun matériel n'est proposé à la réservation pour le moment.</p>
+    </div>
+{{/types}}
+
+<section class="catalogue-grid">
+    {{#types}}
+        <article class="card">
+            <div class="card-image">{{nom}}</div>
+            <div class="card-body">
+                <span class="badge badge-info">{{categorie.libelle}}</span>
+                <h2>{{nom}}</h2>
+                {{#description}}<p>{{description}}</p>{{/description}}
+                <div class="card-meta">
+                    <span class="field-help">Jusqu'à {{dureeMaxTexte}}</span>
+                    {{#nbExemplaires}}
+                        <span class="badge badge-available">{{nbExemplairesTexte}}</span>
+                    {{/nbExemplaires}}
+                    {{^nbExemplaires}}
+                        <span class="badge badge-unavailable">Indisponible</span>
+                    {{/nbExemplaires}}
+                </div>
+                <div class="card-actions">
+                    {{#nbExemplaires}}
+                        <a class="button" href="/reservations/nouvelle?type={{id}}">Réserver</a>
+                    {{/nbExemplaires}}
+                </div>
+            </div>
+        </article>
+    {{/types}}
+</section>
+{{> /include/footer}}
