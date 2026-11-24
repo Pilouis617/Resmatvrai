@@ -40,8 +40,27 @@ public class TypeMaterielService {
         return categorieRepository.findAllByOrderByLibelleAsc();
     }
 
+    private Categorie trouverOuCreerCategorie(String libelleSaisi) {
+        if (libelleSaisi == null || libelleSaisi.isBlank()) {
+            throw new IllegalArgumentException("Saisis une catégorie.");
+        }
+
+        String libelle = libelleSaisi.trim().replaceAll("\\s+", " ");
+        if (libelle.length() > 150) {
+            throw new IllegalArgumentException("La catégorie ne doit pas dépasser 150 caractères.");
+        }
+
+        return categorieRepository.findByLibelleIgnoreCase(libelle)
+                .orElseGet(() -> {
+                    Categorie nouvelle = new Categorie();
+                    nouvelle.setLibelle(libelle);
+                    return categorieRepository.save(nouvelle);
+                });
+    }
+
     /**
      * Crée un type (id null) ou modifie un type existant.
+     * La catégorie saisie est réutilisée si elle existe, sinon elle est créée.
      */
     @Transactional
     public TypeMateriel enregistrer(UUID id, TypeMaterielForm form) {
@@ -52,8 +71,8 @@ public class TypeMaterielService {
         if (doublon) {
             throw new IllegalArgumentException("Un type de matériel porte déjà ce nom.");
         }
-        Categorie categorie = categorieRepository.findById(form.getCategorieId())
-                .orElseThrow(() -> new IllegalArgumentException("Catégorie introuvable."));
+
+        Categorie categorie = trouverOuCreerCategorie(form.getCategorieLibelle());
 
         TypeMateriel type = id == null ? new TypeMateriel() : findById(id);
         type.setNom(nom);
