@@ -73,10 +73,7 @@ public class TypeMaterielController {
 
     private String formulaire(UUID id, TypeMaterielForm form, String erreur, ModelMap model) {
         List<Map<String, Object>> categories = typeMaterielService.findCategories().stream()
-                .map(c -> Map.<String, Object>of(
-                        "id", c.getId(),
-                        "libelle", c.getLibelle(),
-                        "selected", c.getId().equals(form.getCategorieId())))
+                .map(c -> Map.<String, Object>of("libelle", c.getLibelle()))
                 .toList();
         if (id != null) {
             model.put("id", id);
