@@ -7,5 +7,3 @@ assignees: "{{assignee}}"
 ## Description
 {{description}}
 
-## Critères d'acceptation
-{{criteres}}
