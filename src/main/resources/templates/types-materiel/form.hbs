@@ -17,13 +17,18 @@
                 <input id="nom" name="nom" maxlength="70" value="{{form.nom}}" required>
             </div>
             <div class="form-group">
-                <label for="categorieId">Catégorie</label>
-                <select id="categorieId" name="categorieId" required>
-                    <option value="">Choisir une catégorie</option>
+                <label for="categorieLibelle">Catégorie</label>
+                <input id="categorieLibelle" name="categorieLibelle"
+                       list="categoriesExistantes" maxlength="150"
+                       value="{{form.categorieLibelle}}"
+                       placeholder="Ex. : Informatique, Vidéo, Son..."
+                       autocomplete="off" required>
+                <datalist id="categoriesExistantes">
                     {{#categories}}
-                        <option value="{{id}}" {{#selected}}selected{{/selected}}>{{libelle}}</option>
+                        <option value="{{libelle}}"></option>
                     {{/categories}}
-                </select>
+                </datalist>
+                <small class="field-help">Tape une nouvelle catégorie ou choisis une suggestion existante.</small>
             </div>
             <div class="form-group form-group-full">
                 <label for="description">Description</label>
@@ -38,7 +43,6 @@
                     <input type="checkbox" name="auCatalogue" value="true" {{#form.auCatalogue}}checked{{/form.auCatalogue}}>
                     Proposer au catalogue
                 </label>
-                <input type="hidden" name="_auCatalogue" value="on">
             </div>
         </div>
         <button type="submit">Enregistrer</button>
