@@ -27,6 +27,11 @@ public class TypeMaterielForm {
 
     private boolean auCatalogue = true;
 
+    @NotNull(message = "Indique le nombre d'exemplaires.")
+    @Min(value = 0, message = "Le nombre d'exemplaires ne peut pas être négatif.")
+    @Max(value = 500, message = "Le nombre d'exemplaires ne peut pas dépasser 500.")
+    private Integer nbExemplaires = 1;
+
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
 
@@ -39,6 +44,9 @@ public class TypeMaterielForm {
     public String getCategorieLibelle() { return categorieLibelle; }
     public void setCategorieLibelle(String categorieLibelle) { this.categorieLibelle = categorieLibelle; }
 
+    public Integer getNbExemplaires() { return nbExemplaires; }
+    public void setNbExemplaires(Integer nbExemplaires) { this.nbExemplaires = nbExemplaires; }
+
     public boolean isAuCatalogue() { return auCatalogue; }
     public void setAuCatalogue(boolean auCatalogue) { this.auCatalogue = auCatalogue; }
 
@@ -49,6 +57,7 @@ public class TypeMaterielForm {
         form.setDureeMax(type.getDureeMax());
         form.setCategorieLibelle(type.getCategorie().getLibelle());
         form.setAuCatalogue(type.isAuCatalogue());
+        form.setNbExemplaires((int) type.getNbExemplaires());
         return form;
     }
 }
