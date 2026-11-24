@@ -1,0 +1,129 @@
+{{> /include/header}}
+<div class="page-heading">
+    <div>
+        <p class="eyebrow">Espace gestionnaire</p>
+        <h1>Gestion des prêts</h1>
+        <p>Traite les demandes, remets le matériel et enregistre les retours.</p>
+    </div>
+</div>
+
+<h2>Demandes à traiter <span class="badge badge-pending">{{nbDemandes}}</span></h2>
+{{^aDesDemandes}}
+    <div class="empty-state"><p>Aucune demande en attente.</p></div>
+{{/aDesDemandes}}
+{{#aDesDemandes}}
+<div class="table-wrap">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Emprunteur</th>
+            <th scope="col">Matériel</th>
+            <th scope="col">Période</th>
+            <th scope="col">Motif</th>
+            <th scope="col">Décision</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#demandes}}
+            <tr>
+                <td>{{emprunteur.prenom}} {{emprunteur.nom}}<br><span class="field-help">{{emprunteur.login}}</span></td>
+                <td><strong>{{typeMateriel.nom}}</strong></td>
+                <td>du {{dateDebutFr}}<br>au {{dateFinFr}}</td>
+                <td><span class="field-help">{{motif}}</span></td>
+                <td>
+                    <div class="actions-stack">
+                        <form action="/gestion/reservations/{{id}}/decision" method="post">
+                            <input type="hidden" name="{{csrfParameterName}}" value="{{csrfToken}}">
+                            <input type="hidden" name="accepter" value="true">
+                            <button class="button-small" type="submit">Accepter</button>
+                        </form>
+                        <form class="inline-form" action="/gestion/reservations/{{id}}/decision" method="post">
+                            <input type="hidden" name="{{csrfParameterName}}" value="{{csrfToken}}">
+                            <input type="hidden" name="accepter" value="false">
+                            <input name="motif" placeholder="Motif du refus" aria-label="Motif du refus" required>
+                            <button class="button-danger button-small" type="submit">Refuser</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        {{/demandes}}
+        </tbody>
+    </table>
+</div>
+{{/aDesDemandes}}
+
+<h2>Matériel à remettre <span class="badge badge-info">{{nbRemises}}</span></h2>
+{{^aDesRemises}}
+    <div class="empty-state"><p>Aucune remise prévue.</p></div>
+{{/aDesRemises}}
+{{#aDesRemises}}
+<div class="table-wrap">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Emprunteur</th>
+            <th scope="col">Matériel</th>
+            <th scope="col">Période</th>
+            <th scope="col">Remise</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#aRemettre}}
+            <tr>
+                <td>{{emprunteur.prenom}} {{emprunteur.nom}}</td>
+                <td><strong>{{typeMateriel.nom}}</strong></td>
+                <td>du {{dateDebutFr}}<br>au {{dateFinFr}}</td>
+                <td>
+                    <form class="inline-form" action="/gestion/reservations/{{id}}/remise" method="post">
+                        <input type="hidden" name="{{csrfParameterName}}" value="{{csrfToken}}">
+                        <input name="etatAvant" placeholder="État au départ" aria-label="État au départ">
+                        <button class="button-small" type="submit">Remettre</button>
+                    </form>
+                </td>
+            </tr>
+        {{/aRemettre}}
+        </tbody>
+    </table>
+</div>
+{{/aDesRemises}}
+
+<h2>Emprunts en cours <span class="badge badge-in-progress">{{nbEmprunts}}</span></h2>
+{{^aDesEmprunts}}
+    <div class="empty-state"><p>Aucun matériel n'est sorti actuellement.</p></div>
+{{/aDesEmprunts}}
+{{#aDesEmprunts}}
+<div class="table-wrap">
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Exemplaire</th>
+            <th scope="col">Emprunteur</th>
+            <th scope="col">Remis le</th>
+            <th scope="col">Retour prévu</th>
+            <th scope="col">Retour</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#emprunts}}
+            <tr>
+                <td><strong>{{materiel.nom}}</strong><br><span class="field-help">{{etatAvant}}</span></td>
+                <td>{{reservation.emprunteur.prenom}} {{reservation.emprunteur.nom}}</td>
+                <td>{{dateRemiseFr}}</td>
+                <td>
+                    {{dateRetourPrevueFr}}
+                    {{#enRetard}}<br><span class="badge badge-late">En retard</span>{{/enRetard}}
+                </td>
+                <td>
+                    <form class="inline-form" action="/gestion/emprunts/{{id}}/retour" method="post">
+                        <input type="hidden" name="{{csrfParameterName}}" value="{{csrfToken}}">
+                        <input name="etatApres" placeholder="État au retour" aria-label="État au retour">
+                        <button class="button-small" type="submit">Enregistrer le retour</button>
+                    </form>
+                </td>
+            </tr>
+        {{/emprunts}}
+        </tbody>
+    </table>
+</div>
+{{/aDesEmprunts}}
+{{> /include/footer}}
